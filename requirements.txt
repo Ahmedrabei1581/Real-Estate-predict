@@ -15,12 +15,12 @@ jsonschema==4.23.0
 jsonschema-specifications==2025.4.1
 MarkupSafe==3.0.2
 narwhals==1.38.2
-numpy==1.26.4
+numpy==2.2.5
 packaging==24.2
 pandas==2.2.3
 pillow==11.2.1
-protobuf==3.20.3
-pyarrow==14.0.2
+protobuf==6.30.2
+pyarrow==20.0.0
 pydeck==0.9.1
 python-dateutil==2.9.0.post0
 pytz==2025.2
@@ -34,7 +34,6 @@ smmap==5.0.2
 streamlit==1.45.0
 streamlit-option-menu==0.4.0
 tenacity==9.1.2
-tensorflow==2.16.1
 threadpoolctl==3.6.0
 toml==0.10.2
 tornado==6.4.2
@@ -42,3 +41,4 @@ typing_extensions==4.13.2
 tzdata==2025.2
 urllib3==2.4.0
 watchdog==6.0.0
+tensorflow==2.16.1
