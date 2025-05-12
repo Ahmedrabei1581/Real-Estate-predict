@@ -9,25 +9,36 @@ from PIL import Image
 import base64
 
 # Get the directory where this script is located
-BASE_DIR = os.path.dirname(--file--)
-MODEL_DIR = os.path.join(BASE_DIR, "model")  # model files should be in a /model subfolder
+BASE_DIR = os.path.dirname(__file__)
 
 # --- Load model architecture ---
-with open(os.path.join(MODEL_DIR, "model.json"), "r") as json_file:
+json_path = os.path.join(BASE_DIR, "model.json")
+if not os.path.exists(json_path):
+    st.error(f"model.json not found at {json_path}")
+    st.stop()
+with open(json_path, "r") as json_file:
     loaded_model_json = json_file.read()
 model = model_from_json(loaded_model_json)
 
 # --- Load weights and scaler ---
-model.load_weights(os.path.join(MODEL_DIR, "model.weights.h5"))
-scaler = joblib.load(os.path.join(MODEL_DIR, "scaler.pkl"))
+weights_path = os.path.join(BASE_DIR, "model.weights.h5")
+scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
+if not os.path.exists(weights_path):
+    st.error(f"model.weights.h5 not found at {weights_path}")
+    st.stop()
+if not os.path.exists(scaler_path):
+    st.error(f"scaler.pkl not found at {scaler_path}")
+    st.stop()
+model.load_weights(weights_path)
+scaler = joblib.load(scaler_path)
 
 # --- Load zip code data ---
 csv_path = os.path.join(BASE_DIR, "uszips.csv")
-try:
-    zip_data = pd.read_csv(csv_path, encoding="utf-8")
-except FileNotFoundError:
+if not os.path.exists(csv_path):
     st.error("Error: uszips.csv not found. Make sure it's in the same directory as this script.")
     st.stop()
+try:
+    zip_data = pd.read_csv(csv_path, encoding="utf-8")
 except Exception as e:
     st.error(f"Error loading uszips.csv: {e}")
     st.stop()
@@ -42,11 +53,14 @@ except KeyError as e:
 
 # --- Load and encode image ---
 def get_base64_image(image_path):
+    if not os.path.exists(image_path):
+        st.error(f"Image not found at {image_path}")
+        st.stop()
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
 img_path = os.path.join(BASE_DIR, "images.png")
-img_base64 = get_base64_image(img_path)  # Make sure images.png is in the same folder as this script
+img_base64 = get_base64_image(img_path)
 
 # --- Apply background, overlay, and styling ---
 st.markdown(
