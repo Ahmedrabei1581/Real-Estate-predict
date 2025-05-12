@@ -9,7 +9,7 @@ from PIL import Image
 import base64
 
 # Get the directory where this script is located
-BASE_DIR = os.path.dirname(--Real Estate predict2--)
+BASE_DIR = os.path.dirname(--file--)
 MODEL_DIR = os.path.join(BASE_DIR, "model")  # model files should be in a /model subfolder
 
 # --- Load model architecture ---
